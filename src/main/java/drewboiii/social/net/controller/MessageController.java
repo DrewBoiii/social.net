@@ -1,69 +1,42 @@
 package drewboiii.social.net.controller;
 
-import drewboiii.social.net.exception.NotFoundException;
+import drewboiii.social.net.persistence.Message;
+import drewboiii.social.net.service.MessageService;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.SecureRandom;
-import java.util.*;
+import java.util.List;
 
 @RestController
 @RequestMapping("message")
+@AllArgsConstructor
 public class MessageController {
 
-    private static final List<Map<String, String>> messages = new ArrayList<Map<String, String>>() {{
-        add(new HashMap<String, String>() {{
-            put("uid", UUID.randomUUID().toString());
-            put("id", "1");
-            put("content", "message content");
-        }});
-        add(new HashMap<String, String>() {{
-            put("uid", UUID.randomUUID().toString());
-            put("id", "2");
-            put("content", "message content");
-        }});
-        add(new HashMap<String, String>() {{
-            put("uid", UUID.randomUUID().toString());
-            put("id", "3");
-            put("content", "message content");
-        }});
-    }};
+    private final MessageService messageService;
 
     @GetMapping
-    public List<Map<String, String>> getMessages() {
-        return messages;
+    public List<Message> getMessages() {
+        return messageService.getMessages();
     }
 
     @GetMapping("{id}")
-    public Map<String, String> getMessage(@PathVariable Long id) {
-        return getMessageById(id);
+    public Message getMessage(@PathVariable("id") Message message) {
+        return message;
     }
 
     @PostMapping
-    public Map<String, String> saveMessage(@RequestBody Map<String, String> message) {
-        message.put("uid", UUID.randomUUID().toString());
-        message.put("id", String.valueOf(new SecureRandom().longs().filter(value -> value > 0).findFirst().orElse(-1)));
-        messages.add(message);
-        return message;
+    public Message saveMessage(@RequestBody Message message) {
+        return messageService.saveMessage(message);
     }
 
     @PutMapping("{id}")
-    public Map<String, String> putMessage(@PathVariable Long id, @RequestBody Map<String, String> editedMessage) {
-        Map<String, String> message = getMessageById(id);
-        message.putAll(editedMessage);
-        return message;
+    public Message putMessage(@PathVariable("id") Message message, @RequestBody Message editedMessage) {
+        return messageService.editMessage(message, editedMessage);
     }
 
     @DeleteMapping("{id}")
-    public void deleteMessage(@PathVariable Long id) {
-        Map<String, String> messageToDelete = getMessage(id);
-        messages.remove(messageToDelete);
-    }
-
-    private Map<String, String> getMessageById(Long id) {
-        return messages.stream()
-                .filter(message -> message.get("id").contentEquals(id.toString()))
-                .findFirst()
-                .orElseThrow(NotFoundException::new);
+    public void deleteMessage(@PathVariable("id") Message message) {
+        messageService.deleteMessage(message);
     }
 
 }
