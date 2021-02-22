@@ -43,7 +43,7 @@ Vue.component('message-form', {
 Vue.component('message-row', {
     props: ['message', 'editMethod', 'messages'],
     template: '<div>' +
-        '<li>{{ message.id }} - {{ message.content }}</li>' +
+        '<li>{{ message.id }} - Message: {{ message.content }} Posted at: {{ message.createdAt }} </li>' +
         '<span><input type="button" value="Edit" @click="edit" /></span>' +
         '<span><input type="button" value="Remove" @click="remove" /></span>' +
         '</div>',
