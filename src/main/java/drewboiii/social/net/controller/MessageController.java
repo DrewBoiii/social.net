@@ -1,7 +1,9 @@
 package drewboiii.social.net.controller;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import drewboiii.social.net.persistence.model.Message;
 import drewboiii.social.net.service.MessageService;
+import drewboiii.social.net.util.ViewUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +22,7 @@ public class MessageController {
     }
 
     @GetMapping("{id}")
+    @JsonView(ViewUtils.FullMessage.class)
     public Message getMessage(@PathVariable("id") Message message) {
         return message;
     }
