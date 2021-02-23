@@ -1,6 +1,6 @@
 package drewboiii.social.net.controller;
 
-import drewboiii.social.net.persistence.Message;
+import drewboiii.social.net.persistence.model.Message;
 import drewboiii.social.net.service.MessageService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;

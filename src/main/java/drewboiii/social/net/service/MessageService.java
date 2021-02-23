@@ -1,6 +1,6 @@
 package drewboiii.social.net.service;
 
-import drewboiii.social.net.persistence.Message;
+import drewboiii.social.net.persistence.model.Message;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package drewboiii.social.net.persistence;
+package drewboiii.social.net.persistence.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
