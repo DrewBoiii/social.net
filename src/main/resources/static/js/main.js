@@ -5,13 +5,17 @@ Vue.component('message-form', {
     data: function () {
         return {
             content: '',
-            id: ''
+            id: '',
+            uid: '',
+            createdAt: ''
         }
     },
     watch: {
         messageAttr: function (newValue, oldValue) {
             this.content = newValue.content;
             this.id = newValue.id;
+            this.uid = newValue.uid;
+            this.createdAt = newValue.createdAt;
         }
     },
     template: '<div>' +
@@ -20,7 +24,7 @@ Vue.component('message-form', {
         '</div>',
     methods: {
         save: function () {
-            let message = {content: this.content};
+            let message = {id: this.id, uid: this.uid, content: this.content, createdAt: this.createdAt};
             if (this.id) {
                 messageApi.update({id: this.id}, message)
                     .then(response => response.json()
@@ -71,11 +75,6 @@ Vue.component('messages-list', {
         '<message-form :messages="messages" :messageAttr="message"/>' +
         '<message-row v-for="message in messages" :key="message.id" :message="message" :editMethod="editMethod" :messages="messages" />' +
         '</div>',
-    created: function () {
-        messageApi.get()
-            .then(response => response.json()
-                .then(data => data.forEach(message => this.messages.push(message))))
-    },
     methods: {
         editMethod: function (message) {
             this.message = message;
@@ -88,5 +87,10 @@ let app = new Vue({
     template: '<messages-list :messages="messages" />',
     data: {
         messages: []
+    },
+    created: function () {
+        messageApi.get()
+            .then(response => response.json()
+                .then(data => data.forEach(message => this.messages.push(message))))
     }
 });

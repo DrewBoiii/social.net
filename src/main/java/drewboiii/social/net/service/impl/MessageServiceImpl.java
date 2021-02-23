@@ -1,8 +1,8 @@
 package drewboiii.social.net.service.impl;
 
 import drewboiii.social.net.exception.NotFoundException;
-import drewboiii.social.net.persistence.Message;
-import drewboiii.social.net.persistence.MessageRepository;
+import drewboiii.social.net.persistence.model.Message;
+import drewboiii.social.net.persistence.repository.MessageRepository;
 import drewboiii.social.net.service.MessageService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -38,7 +38,7 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public Message editMessage(Message actual, Message edited) {
-        BeanUtils.copyProperties(edited, actual, "id", "uid");
+        BeanUtils.copyProperties(edited, actual, "id", "uid", "createdAt");
         return messageRepository.save(actual);
     }
 
