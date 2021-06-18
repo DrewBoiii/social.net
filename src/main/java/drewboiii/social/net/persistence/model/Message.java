@@ -2,35 +2,41 @@ package drewboiii.social.net.persistence.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonView;
-import drewboiii.social.net.util.ViewUtils;
+import drewboiii.social.net.util.MessageViews;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
-@Entity
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table
 public class Message {
 
+    @JsonView(MessageViews.FullMessage.class)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonView(ViewUtils.FullMessage.class)
     private Long id;
 
-    @JsonView(ViewUtils.FullMessage.class)
+    @JsonView(MessageViews.FullMessage.class)
     private String uid;
 
-    @JsonView(ViewUtils.FullMessage.class)
+    @JsonView(MessageViews.Public.class)
     private String content;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonView(ViewUtils.FullMessage.class)
+    @JsonView(MessageViews.Public.class)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
+    @Column(updatable = false)
     private LocalDateTime createdAt;
 
     @PrePersist
-    public void createdAt() {
-        this.uid = UUID.randomUUID().toString();
+    void prePersist() {
         this.createdAt = LocalDateTime.now();
     }
 
