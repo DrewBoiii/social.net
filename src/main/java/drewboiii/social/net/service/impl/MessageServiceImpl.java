@@ -9,6 +9,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -33,6 +34,7 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public Message saveMessage(Message message) {
+        message.setUid(UUID.randomUUID().toString());
         return messageRepository.save(message);
     }
 
@@ -44,6 +46,12 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public void deleteMessage(Message message) {
+        messageRepository.delete(message);
+    }
+
+    @Override
+    public void deleteMessage(Long id) {
+        Message message = messageRepository.findById(id).orElseThrow(NotFoundException::new);
         messageRepository.delete(message);
     }
 }
