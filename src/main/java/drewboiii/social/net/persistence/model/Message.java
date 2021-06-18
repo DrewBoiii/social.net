@@ -2,7 +2,7 @@ package drewboiii.social.net.persistence.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonView;
-import drewboiii.social.net.util.MessageViews;
+import drewboiii.social.net.views.MessageViews;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

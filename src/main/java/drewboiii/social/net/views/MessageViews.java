@@ -1,4 +1,4 @@
-package drewboiii.social.net.util;
+package drewboiii.social.net.views;
 
 public final class MessageViews {
 
