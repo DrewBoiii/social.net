@@ -1,6 +1,6 @@
 package drewboiii.social.net.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import drewboiii.social.net.filter.JwtRequestFilter;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,21 +9,29 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
     @Qualifier("customUserDetailsServiceImpl")
-    private UserDetailsService userDetailsService;
+    private final UserDetailsService userDetailsService;
+
+    private final JwtRequestFilter jwtRequestFilter;
+
+    public SecurityConfig(UserDetailsService userDetailsService, JwtRequestFilter jwtRequestFilter) {
+        this.userDetailsService = userDetailsService;
+        this.jwtRequestFilter = jwtRequestFilter;
+    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-         auth.userDetailsService(userDetailsService);
+        auth.userDetailsService(userDetailsService);
     }
 
     @Override
@@ -31,7 +39,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests().antMatchers("/authentication").permitAll()
-                .anyRequest().authenticated();
+                .anyRequest().authenticated()
+                .and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http
+                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
     @Bean

@@ -17,7 +17,7 @@ import static com.google.common.collect.Maps.newHashMap;
 public final class JwtUtils {
 
     private static final String SECRET_KEY = "secret";
-    public static final int TEN_HOURS_IN_MILLIS = 1000 * 60 * 60 * 10;
+    private static final int TEN_HOURS_IN_MILLIS = 1000 * 60 * 60 * 10;
 
     public Boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
@@ -28,7 +28,7 @@ public final class JwtUtils {
         return createToken(claims, userDetails.getUsername());
     }
 
-    public Boolean validateToken(String token, UserDetails userDetails) {
+    public Boolean isValidToken(String token, UserDetails userDetails) {
         final String username = extractUserName(token);
         return username.equals(userDetails.getUsername()) && !isTokenExpired(token);
     }
@@ -43,7 +43,7 @@ public final class JwtUtils {
                 .compact();
     }
 
-    private String extractUserName(String token) {
+    public String extractUserName(String token) {
         return extractClaim(token, Claims::getSubject);
     }
 

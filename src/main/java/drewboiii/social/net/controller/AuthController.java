@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -45,7 +46,8 @@ public class AuthController {
                                 authRequest.getPassword())))
                 .orElseThrow(javax.naming.AuthenticationException::new);
         // TODO: 6/18/2021 extract from auth?
-        final UserDetails userDetails = userDetailsService.loadUserByUsername(authRequest.getUsername());
+        String username = ((User) authentication.getPrincipal()).getUsername();
+        final UserDetails userDetails = userDetailsService.loadUserByUsername(username);
         final String jwt = jwtUtils.generateToken(userDetails);
         return ResponseEntity.ok(new AuthenticationResponseDto(jwt));
     }
