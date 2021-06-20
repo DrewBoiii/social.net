@@ -1,6 +1,6 @@
 package drewboiii.social.net.controller;
 
-import drewboiii.social.net.persistence.dto.user.UserRegistrationDto;
+import drewboiii.social.net.dto.user.UserRegistrationDto;
 import drewboiii.social.net.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;

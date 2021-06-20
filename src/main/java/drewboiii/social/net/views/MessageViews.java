@@ -4,6 +4,6 @@ public final class MessageViews {
 
     public interface Public {}
 
-    public interface FullMessage extends Public {}
+    public interface FullMessage extends Public, BasedEntityViews.SystemFields {}
 
 }

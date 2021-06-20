@@ -1,7 +1,7 @@
 package drewboiii.social.net.controller;
 
-import drewboiii.social.net.persistence.dto.auth.AuthenticationRequestDto;
-import drewboiii.social.net.persistence.dto.auth.AuthenticationResponseDto;
+import drewboiii.social.net.dto.auth.AuthenticationRequestDto;
+import drewboiii.social.net.dto.auth.AuthenticationResponseDto;
 import drewboiii.social.net.util.JwtUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;

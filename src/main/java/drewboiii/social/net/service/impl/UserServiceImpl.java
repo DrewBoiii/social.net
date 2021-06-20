@@ -1,6 +1,6 @@
 package drewboiii.social.net.service.impl;
 
-import drewboiii.social.net.persistence.dto.user.UserRegistrationDto;
+import drewboiii.social.net.dto.user.UserRegistrationDto;
 import drewboiii.social.net.persistence.model.Usr;
 import drewboiii.social.net.persistence.repository.UserRepository;
 import drewboiii.social.net.service.UserService;

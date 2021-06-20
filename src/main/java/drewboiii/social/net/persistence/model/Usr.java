@@ -1,40 +1,28 @@
 package drewboiii.social.net.persistence.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.UUID;
+import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Builder
 @Entity
 @Table(name = "usr")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Usr {
+public class Usr extends BasedEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(updatable = false, unique = true)
-    private String uid;
+    public static final String USERNAME_ATTR = "username";
+    public static final String PASSWORD_ATTR = "password";
 
     @Column(unique = true)
     private String username;
 
     private String password;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    @Column(updatable = false)
-    private LocalDateTime createdAt;
-
-    @PrePersist
-    void prePersist() {
-        this.uid = UUID.randomUUID().toString();
-        this.createdAt = LocalDateTime.now();
-    }
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<Message> messages;
 
 }

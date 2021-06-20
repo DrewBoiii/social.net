@@ -1,4 +1,4 @@
-package drewboiii.social.net.persistence.dto.auth;
+package drewboiii.social.net.dto.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
