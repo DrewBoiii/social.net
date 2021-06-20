@@ -1,7 +1,7 @@
 package drewboiii.social.net.service;
 
-import drewboiii.social.net.persistence.dto.auth.AuthenticationRequestDto;
-import drewboiii.social.net.persistence.dto.auth.AuthenticationResponseDto;
+import drewboiii.social.net.dto.auth.AuthenticationRequestDto;
+import drewboiii.social.net.dto.auth.AuthenticationResponseDto;
 
 public interface AuthenticationService {
 

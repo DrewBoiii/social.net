@@ -1,6 +1,5 @@
 package drewboiii.social.net.service;
 
-import com.sun.istack.NotNull;
 import drewboiii.social.net.persistence.model.Message;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +14,10 @@ public interface MessageService {
 
     List<Message> getMessages();
 
+    @Deprecated
     Message saveMessage(Message message);
+
+    Message saveMessage(Message message, String username);
 
     Message editMessage(Message actual, Message edited);
 

@@ -1,4 +1,4 @@
-package drewboiii.social.net.persistence.dto.user;
+package drewboiii.social.net.dto.user;
 
 import lombok.Data;
 

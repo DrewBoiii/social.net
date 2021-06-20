@@ -1,46 +1,29 @@
 package drewboiii.social.net.persistence.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonView;
 import drewboiii.social.net.views.MessageViews;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.UUID;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table
-public class Message {
+public class Message extends BasedEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonView(MessageViews.FullMessage.class)
-    private Long id;
-
-    @Column(updatable = false, unique = true)
-    @JsonView(MessageViews.FullMessage.class)
-    private String uid;
+    public static final String CONTENT_ATTR = "content";
 
     @JsonView(MessageViews.Public.class)
     private String content;
 
-    @Column(updatable = false)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
+    @ManyToOne
     @JsonView(MessageViews.Public.class)
-    private LocalDateTime createdAt;
-
-    @PrePersist
-    void prePersist() {
-        this.uid = UUID.randomUUID().toString();
-        this.createdAt = LocalDateTime.now();
-    }
+    private Usr author;
 
 }
