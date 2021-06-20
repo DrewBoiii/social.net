@@ -3,7 +3,7 @@ package drewboiii.social.net.controller;
 import com.fasterxml.jackson.annotation.JsonView;
 import drewboiii.social.net.persistence.model.Message;
 import drewboiii.social.net.service.MessageService;
-import drewboiii.social.net.util.MessageViews;
+import drewboiii.social.net.views.MessageViews;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

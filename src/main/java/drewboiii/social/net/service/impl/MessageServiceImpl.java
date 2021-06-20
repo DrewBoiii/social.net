@@ -34,7 +34,6 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public Message saveMessage(Message message) {
-        message.setUid(UUID.randomUUID().toString());
         return messageRepository.save(message);
     }
 
