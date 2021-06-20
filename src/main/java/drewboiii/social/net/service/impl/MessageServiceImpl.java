@@ -1,12 +1,12 @@
 package drewboiii.social.net.service.impl;
 
 import drewboiii.social.net.exception.NotFoundException;
+import drewboiii.social.net.persistence.model.BasedEntity;
 import drewboiii.social.net.persistence.model.Message;
 import drewboiii.social.net.persistence.model.Usr;
 import drewboiii.social.net.persistence.repository.MessageRepository;
 import drewboiii.social.net.persistence.repository.UserRepository;
 import drewboiii.social.net.service.MessageService;
-import drewboiii.social.net.util.StateStatus;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -35,7 +35,7 @@ public class MessageServiceImpl implements MessageService {
     public List<Message> getMessages() {
         // TODO: 6/20/2021 db filter
         return messageRepository.findAll().stream()
-                .filter(message -> StateStatus.ACTIVE.equals(message.getStatus()))
+                .filter(message -> BasedEntity.Status.ACTIVE.equals(message.getStatus()))
                 .collect(Collectors.toList());
     }
 
@@ -65,7 +65,7 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public void deleteMessage(Long id) {
         Message message = messageRepository.findById(id).orElseThrow(NotFoundException::new);
-        message.setStatus(StateStatus.DELETED);
+        message.setStatus(BasedEntity.Status.DELETED);
         messageRepository.save(message);
     }
 }

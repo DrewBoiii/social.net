@@ -45,7 +45,6 @@ public class AuthController {
                                 authRequest.getUsername(),
                                 authRequest.getPassword())))
                 .orElseThrow(javax.naming.AuthenticationException::new);
-        // TODO: 6/18/2021 extract from auth?
         String username = ((User) authentication.getPrincipal()).getUsername();
         final UserDetails userDetails = userDetailsService.loadUserByUsername(username);
         final String jwt = jwtUtils.generateToken(userDetails);

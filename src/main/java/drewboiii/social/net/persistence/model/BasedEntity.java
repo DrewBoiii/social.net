@@ -2,7 +2,6 @@ package drewboiii.social.net.persistence.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonView;
-import drewboiii.social.net.util.StateStatus;
 import drewboiii.social.net.views.BasedEntityViews;
 import lombok.Data;
 
@@ -18,6 +17,10 @@ public class BasedEntity {
     public static final String UID_ATTR = "uid";
     public static final String CREATED_AT_ATTR = "createdAt";
     public static final String STATUS_ATTR = "status";
+
+    public enum Status {
+        ACTIVE, DELETED
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,13 +38,13 @@ public class BasedEntity {
 
     @Enumerated(EnumType.STRING)
     @JsonView(BasedEntityViews.SystemFields.class)
-    private StateStatus status;
+    private Status status;
 
     @PrePersist
     void prePersist() {
         this.uid = UUID.randomUUID().toString();
         this.createdAt = LocalDateTime.now();
-        this.status = StateStatus.ACTIVE;
+        this.status = Status.ACTIVE;
     }
 
 }

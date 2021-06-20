@@ -16,6 +16,7 @@ import static com.google.common.collect.Maps.newHashMap;
 @Component
 public final class JwtUtils {
 
+    // TODO: 6/20/2021 secret, move to config
     private static final String SECRET_KEY = "secret";
     private static final int TEN_HOURS_IN_MILLIS = 1000 * 60 * 60 * 10;
 

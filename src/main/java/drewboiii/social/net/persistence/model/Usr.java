@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -24,5 +25,15 @@ public class Usr extends BasedEntity {
 
     @OneToMany(fetch = FetchType.LAZY)
     private List<Message> messages;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "users_roles",
+            joinColumns = {
+                    @JoinColumn(name = "usr_id", referencedColumnName = "id")
+            },
+            inverseJoinColumns = {
+                    @JoinColumn(name = "role_id", referencedColumnName = "id")
+            })
+    private Set<Role> roles;
 
 }
